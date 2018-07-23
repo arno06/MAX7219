@@ -2,20 +2,23 @@ from max7219 import MAX7219
 from max7219 import HeightPixelFont
 import time
 
-str="20:23"
+def set_time(matrix, separator):
+    t = time.localtime()
+    time_str = str(t.tm_hour)+separator+str(t.tm_min)
+    canvas = HeightPixelFont.from_string(time_str)
+    diff = 32 - len(canvas)
+    for i in range(diff):
+        canvas.append([0 for k in range(8)])
+    matrix.set_canvas(canvas)
 
-canvas = HeightPixelFont.from_string(str)
-
-diff = 32 - len(canvas)
-
-for i in range(diff):
-    canvas.append([0 for k in range(8)])
 
 matrix = MAX7219()
-matrix.set_canvas(canvas)
 
 try:
     while True:
+        set_time(matrix, ":")
+        time.sleep(1)
+        set_time(matrix, " ")
         time.sleep(1)
 except KeyboardInterrupt:
     matrix.close()

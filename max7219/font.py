@@ -47,6 +47,8 @@ class HeightPixelFont:
     def from_string(str):
         canvas = []
         for i, c in enumerate(str):
+            if i > 0:
+                canvas.append([0 for j in range(8)])
             d = HeightPixelFont.chars[c]
             if d is None:
                 print("HeightPixelFont missing char : "+c)
