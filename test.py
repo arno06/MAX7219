@@ -4,10 +4,10 @@ import time
 
 def set_time(matrix, separator):
     t = time.localtime()
-    hour = t.tm_hour
+    hour = str(t.tm_hour)
     if t.tm_hour < 10:
         hour = "0"+hour
-    min = t.tm_min
+    min = str(t.tm_min)
     if t.tm_min<10:
         min = "0"+min
     time_str = hour+separator+min
