@@ -4,7 +4,13 @@ import time
 
 def set_time(matrix, separator):
     t = time.localtime()
-    time_str = str(t.tm_hour)+separator+str(t.tm_min)
+    hour = t.tm_hour
+    if t.tm_hour < 10:
+        hour = "0"+hour
+    min = t.tm_min
+    if t.tm_min<10:
+        min = "0"+min
+    time_str = hour+separator+min
     canvas = HeightPixelFont.from_string(time_str)
     diff = 32 - len(canvas)
     for i in range(diff):
