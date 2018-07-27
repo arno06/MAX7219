@@ -16,6 +16,8 @@ class ClockDaemon(run.RunDaemon):
     def __init__(self, pidfile):
         super(ClockDaemon, self).__init__(pidfile=pidfile)
         self.matrix = MAX7219()
+        self.matrix.set_intensity(4)
+        self.half = 0
 
     def run(self):
         while True:
@@ -35,8 +37,8 @@ class ClockDaemon(run.RunDaemon):
         time_str = hour+separator+min
         canvas = HeightPixelFont.from_string(time_str)
         diff = 32 - len(canvas)
-        half = math.ceil(diff/2)
-        for i in range(int(half)):
+        self.half = math.ceil(diff/2)
+        for i in range(int(self.half)):
             canvas.append([0 for k in range(8)])
             canvas.insert(0, [0 for x in range(8)])
         if len(canvas)>32:
@@ -59,6 +61,7 @@ if __name__ == '__main__':
     if action == "start":
         print("starting "+pidfile)
         d.start()
+        print(d.half)
     elif action == "stop":
         print("stop "+pidfile)
         d.close()
