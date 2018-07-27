@@ -6,6 +6,7 @@ import sys
 import logging
 import os
 import time
+import math
 
 from daemons.prefab import run
 
@@ -34,8 +35,12 @@ class ClockDaemon(run.RunDaemon):
         time_str = hour+separator+min
         canvas = HeightPixelFont.from_string(time_str)
         diff = 32 - len(canvas)
-        for i in range(diff):
+        half = math.ceil(diff/2)
+        for i in range(int(half)):
             canvas.append([0 for k in range(8)])
+            canvas.insert(0, [0 for x in range(8)])
+        if len(canvas)>32:
+            canvas.pop()
         self.matrix.set_canvas(canvas)
 
     def close(self):
