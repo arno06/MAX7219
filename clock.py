@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-from max7219 import MAX7219
-from max7219 import HeightPixelFont
+from max7219 import ScreenTicker
+from max7219 import set_interval
 import sys
 import logging
 import os
 import time
-import math
 
 from daemons.prefab import run
 
@@ -15,17 +14,19 @@ class ClockDaemon(run.RunDaemon):
 
     def __init__(self, pidfile):
         super(ClockDaemon, self).__init__(pidfile=pidfile)
-        self.matrix = MAX7219()
-        self.matrix.set_intensity(4)
+        self.screen = ScreenTicker()
+        self.separator = " "
 
     def run(self):
-        while True:
-            self.set_time(":")
-            time.sleep(0.5)
-            self.set_time(" ")
-            time.sleep(0.5)
+        self.screen.run()
+        self.update_time()
 
-    def set_time(self, separator):
+    @set_interval(.5)
+    def update_time(self):
+        if self.separator == " ":
+            self.separator = ":"
+        else:
+            self.separator = " "
         t = time.localtime()
         hour = str(t.tm_hour)
         if t.tm_hour < 10:
@@ -33,19 +34,11 @@ class ClockDaemon(run.RunDaemon):
         min = str(t.tm_min)
         if t.tm_min<10:
             min = "0"+min
-        time_str = hour+separator+min
-        canvas = HeightPixelFont.from_string(time_str)
-        diff = 32 - len(canvas)
-        half = math.ceil(diff/2)
-        for i in range(int(half)):
-            canvas.append([0 for k in range(8)])
-            canvas.insert(0, [0 for x in range(8)])
-        if len(canvas)>32:
-            canvas.pop()
-        self.matrix.set_canvas(canvas)
+        time_str = hour+self.separator+min
+        self.screen.set_string(time_str)
 
     def close(self):
-        self.matrix.close()
+        self.screen.reset()
         self.stop()
 
 
