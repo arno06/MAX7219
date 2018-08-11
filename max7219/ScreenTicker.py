@@ -1,7 +1,7 @@
 import math
-from . import MAX7219
-from . import HeightPixelFont
-from . import set_interval
+from .MAX7219 import MAX7219
+from .font import HeightPixelFont
+from .set_interval import set_interval
 
 
 class ScreenTicker:
