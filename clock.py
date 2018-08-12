@@ -16,10 +16,11 @@ class ClockDaemon(run.RunDaemon):
         super(ClockDaemon, self).__init__(pidfile=pidfile)
         self.screen = ScreenTicker()
         self.separator = " "
+        self.runner = []
 
     def run(self):
-        self.screen.run()
-        self.update_time()
+        self.runner.append(self.screen.run())
+        self.runner.append(self.update_time())
 
     @set_interval(.5)
     def update_time(self):
@@ -38,6 +39,8 @@ class ClockDaemon(run.RunDaemon):
         self.screen.set_string(time_str)
 
     def close(self):
+        for t in self.runner:
+            t.set()
         self.screen.reset()
         self.stop()
 

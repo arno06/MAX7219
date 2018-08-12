@@ -33,7 +33,7 @@ class ScreenTicker:
                 for i in range(int(half)):
                     self.canvas.append([0 for k in range(8)])
                     self.canvas.insert(0, [0 for x in range(8)])
-                if len(self.canvas) > 32:
+                if len(self.canvas) > self.dimension[0]:
                     self.canvas.pop()
         self.matrix.set_canvas(self.canvas)
 
