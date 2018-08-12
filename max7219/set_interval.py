@@ -10,9 +10,7 @@ def set_interval(interval):
                 while not stop.isSet():
                     time.sleep(interval)
                     function(*args, **kwargs)
-            t = threading.Timer(0, inner_wrap)
-            t.daemon = True
-            t.start()
+            threading.Timer(0, inner_wrap).start()
             return stop
         return wrap
     return outer_wrap
