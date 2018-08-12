@@ -35,6 +35,7 @@ class ScreenTicker:
                     self.canvas.insert(0, [0 for x in range(8)])
                 if len(self.canvas) > 32:
                     self.canvas.pop()
+        self.matrix.set_canvas(self.canvas)
 
     def set_string(self, string):
         self.canvas = HeightPixelFont.from_string(string)
