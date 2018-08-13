@@ -52,7 +52,7 @@ class ScreenTicker:
                 self.applied_canvas.append(self.canvas[k])
                 k = k+1
 
-        while len(self.applied_canvas) < self.directions[0]:
+        while len(self.applied_canvas) < self.dimension[0]:
             self.applied_canvas.append([0 for k in range(8)])
         self.matrix.set_canvas(self.applied_canvas)
 
