@@ -77,5 +77,23 @@ class ScreenTicker:
         self.canvas = HeightPixelFont.from_string(string)
         self.update_canvas()
 
+    def set_direction(self, direction_x = None, direction_y = None):
+        if direction_x is not None:
+            self.directions[0] = direction_x
+        if direction_y is not None:
+            self.directions[1] = direction_y
+
+    def set_mode(self, mode_x = None, mode_y = None):
+        if mode_x is not None:
+            self.modes[0] = mode_x
+        if mode_y is not None:
+            self.modes[1] = mode_y
+
+    def set_alignment(self, alignment_x = None, alignment_y = None):
+        if alignment_x is not None:
+            self.alignments[0] = alignment_x
+        if alignment_y is not None:
+            self.alignments[1]= alignment_y
+
     def reset(self):
         self.matrix.close()
