@@ -54,7 +54,6 @@ class ScreenTicker:
 
         while len(self.applied_canvas) < self.dimension[0]:
             self.applied_canvas.append([0 for k in range(8)])
-        self.matrix.set_canvas(self.applied_canvas)
 
     def update_position(self):
         if self.modes[0] == ScreenTicker.MODE_STATIC:
@@ -72,6 +71,7 @@ class ScreenTicker:
                 self.directions[0] = ScreenTicker.DIRECTION_NEG
             elif self.directions[0] == ScreenTicker.DIRECTION_NEG and self.camera_position[0] == 0:
                 self.directions[0] = ScreenTicker.DIRECTION_POS
+        self.matrix.set_canvas(self.applied_canvas)
 
     def set_string(self, string):
         self.canvas = HeightPixelFont.from_string(string)
